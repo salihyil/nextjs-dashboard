@@ -12,6 +12,7 @@ const config: Config = {
         '13': 'repeat(13, minmax(0, 1fr))',
       },
       colors: {
+        'muted-foreground': 'hsl(var(--muted-foreground))',
         blue: {
           400: '#2589FE',
           500: '#0070F3',
@@ -25,6 +26,19 @@ const config: Config = {
           transform: 'translateX(100%)',
         },
       },
+      slide: {
+        from: {
+          transform: 'translateX(70%)',
+          opacity: '0',
+        },
+        to: {
+          transform: 'translateX(0%)',
+          opacity: '1',
+        },
+      },
+    },
+    animation: {
+      slide: 'slide 750ms ease-in-out',
     },
   },
   plugins: [require('@tailwindcss/forms')],
