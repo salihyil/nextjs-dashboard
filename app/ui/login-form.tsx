@@ -7,6 +7,7 @@ import {
   ExclamationCircleIcon,
   KeyIcon,
 } from "@heroicons/react/24/outline";
+import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
 import { authenticate, authenticateGoogle } from "../lib/actions";
 import { Button } from "./button";
@@ -71,6 +72,12 @@ export default function LoginForm() {
             </div>
           </div>
           <LoginButton />
+          <Link href="/register">
+            <Button className="mt-4 w-full bg-green-500 hover:bg-green-400">
+              Create new account
+              <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+            </Button>
+          </Link>
           <div
             className="flex h-8 items-end space-x-1"
             aria-live="polite"

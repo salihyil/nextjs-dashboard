@@ -2,27 +2,12 @@
 
 import { signIn } from "@/auth";
 import { sql } from "@vercel/postgres";
+import bcrypt from "bcrypt";
 import { AuthError } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { z } from "zod";
-
-const FormSchema = z.object({
-  id: z.string(),
-  customerId: z.string({
-    invalid_type_error: "Please select a customer.",
-  }),
-  amount: z.coerce
-    .number()
-    .gt(0, { message: "Please enter an amount greater than $0." }),
-  status: z.enum(["pending", "paid"], {
-    invalid_type_error: "Please select an invoice status.",
-  }),
-  date: z.string(),
-});
-
-const CreateInvoice = FormSchema.omit({ id: true, date: true });
-const UpdateInvoice = FormSchema.omit({ id: true, date: true });
+import { v4 as uuidv4 } from "uuid";
+import { CreateInvoice, InsertUser, UpdateInvoice } from "./schemas";
 
 export type State = {
   errors?: {
@@ -33,7 +18,19 @@ export type State = {
   message?: string | null;
 };
 
-export async function createInvoice(prevState: State, formData: FormData) {
+export type UserState = {
+  errors?: {
+    name?: string[];
+    email?: string[];
+    password?: string[];
+  };
+  message?: string | null;
+};
+
+export async function createInvoice(
+  prevState: State,
+  formData: FormData,
+): Promise<State> {
   /* Tip: If you're working with forms that have many fields, you may want to consider using the entries() method with JavaScript's Object.fromEntries().
    For example:
    const rawFormData = Object.fromEntries(formData.entries()) */
@@ -169,4 +166,46 @@ export async function authenticateGoogle(
     }
     throw error;
   }
+}
+
+export async function insertUsers(prevState: UserState, formData: FormData) {
+  const validatedFields = InsertUser.safeParse({
+    name: formData.get("name"),
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Insert User.",
+    };
+  }
+
+  const { email, name, password } = validatedFields.data;
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await sql`
+        INSERT INTO users (id, name, email, password)
+        VALUES (${uuidv4().toString()}, ${name}, ${email}, ${hashedPassword})
+        ON CONFLICT (id) DO NOTHING;
+      `;
+  } catch (error: any) {
+    if (
+      error.message.includes(
+        'duplicate key value violates unique constraint "users_email_key"',
+      )
+    ) {
+      return {
+        message:
+          "This email address is already in use. Please try a different email address.",
+        errors: {},
+      };
+    }
+    return { message: error.message };
+  }
+
+  revalidatePath("/login");
+  redirect("/login");
 }
