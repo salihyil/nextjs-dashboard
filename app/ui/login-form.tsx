@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { lusitana } from "@/app/ui/fonts";
-import { ArrowRightIcon } from "@heroicons/react/20/solid";
+import { lusitana } from '@/app/ui/fonts';
+import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import {
   AtSymbolIcon,
   ExclamationCircleIcon,
   KeyIcon,
   EyeIcon,
   EyeSlashIcon,
-} from "@heroicons/react/24/outline";
-import Link from "next/link";
-import { useState } from "react";
-import { useFormState, useFormStatus } from "react-dom";
-import { authenticate, authenticateGoogle } from "../lib/actions";
-import { Button } from "./button";
-import Spinner from "./spinner";
+} from '@heroicons/react/24/outline';
+import Link from 'next/link';
+import { useState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
+import { authenticate, authenticateGoogle } from '../lib/actions';
+import { Button } from './button';
+import Spinner from './spinner';
 
 export default function LoginForm() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
@@ -23,7 +23,7 @@ export default function LoginForm() {
     undefined,
   );
   const [visiblePassword, setVisiblePassword] = useState(false);
-  const [passwordInput, setPasswordInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState('');
 
   return (
     <>
@@ -84,7 +84,7 @@ export default function LoginForm() {
                 <input
                   className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                   id="password"
-                  type={visiblePassword ? "text" : "password"}
+                  type={visiblePassword ? 'text' : 'password'}
                   name="password"
                   placeholder="Enter password"
                   required

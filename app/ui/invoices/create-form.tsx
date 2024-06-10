@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { createInvoice } from "@/app/lib/actions";
-import { CustomerField } from "@/app/lib/definitions";
-import { Button } from "@/app/ui/button";
+import { createInvoice } from '@/app/lib/actions';
+import { CustomerField } from '@/app/lib/definitions';
+import { Button } from '@/app/ui/button';
 import {
   CheckIcon,
   ClockIcon,
   CurrencyDollarIcon,
   UserCircleIcon,
-} from "@heroicons/react/24/outline";
-import Link from "next/link";
-import { useFormState } from "react-dom";
+} from '@heroicons/react/24/outline';
+import Link from 'next/link';
+import { useFormState } from 'react-dom';
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
   const initialState = { message: null, errors: {} };

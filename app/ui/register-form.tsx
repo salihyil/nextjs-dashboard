@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { lusitana } from "@/app/ui/fonts";
-import { ArrowRightIcon } from "@heroicons/react/20/solid";
+import { lusitana } from '@/app/ui/fonts';
+import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import {
   AtSymbolIcon,
   ExclamationCircleIcon,
   EyeIcon,
   EyeSlashIcon,
   KeyIcon,
-} from "@heroicons/react/24/outline";
-import { useFormState, useFormStatus } from "react-dom";
+} from '@heroicons/react/24/outline';
+import { useFormState, useFormStatus } from 'react-dom';
 
-import { useState } from "react";
-import { UserState, insertUsers } from "../lib/actions";
-import { Button } from "./button";
-import Spinner from "./spinner";
+import { useState } from 'react';
+import { UserState, insertUsers } from '../lib/actions';
+import { Button } from './button';
+import Spinner from './spinner';
 
 type Props = {};
 
@@ -22,7 +22,7 @@ const RegisterForm = (props: Props) => {
   const initialState: UserState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(insertUsers, initialState);
   const [visiblePassword, setVisiblePassword] = useState(false);
-  const [passwordInput, setPasswordInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState('');
 
   return (
     <form action={dispatch} className="space-y-3">
@@ -114,7 +114,7 @@ const RegisterForm = (props: Props) => {
               <input
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="password"
-                type={visiblePassword ? "text" : "password"}
+                type={visiblePassword ? 'text' : 'password'}
                 name="password"
                 placeholder="Enter password"
                 required
