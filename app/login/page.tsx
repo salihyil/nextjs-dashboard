@@ -3,7 +3,9 @@ import LoginForm from '@/app/ui/login-form';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Login',
+  title: {
+    absolute: 'Login',
+  }
 };
 
 export default function LoginPage() {

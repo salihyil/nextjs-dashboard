@@ -1,5 +1,12 @@
 import AcmeLogo from '@/app/ui/acme-logo';
+import { Metadata } from 'next';
 import RegisterForm from '../ui/register-form';
+
+export const metadata: Metadata = {
+  title: {
+    absolute: 'Register',
+  }
+};
 
 export default function RegisterPage() {
   return (
