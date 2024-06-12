@@ -13,7 +13,9 @@ import { useFormState, useFormStatus } from 'react-dom';
 
 import { useState } from 'react';
 import { UserState, insertUsers } from '../lib/actions';
+import { PasswordSchema } from '../lib/schemas';
 import { Button } from './button';
+import PasswordStrengthMeter from '@/app/ui/password-strength-meter';
 import Spinner from './spinner';
 
 type Props = {};
@@ -22,7 +24,21 @@ const RegisterForm = (props: Props) => {
   const initialState: UserState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(insertUsers, initialState);
   const [visiblePassword, setVisiblePassword] = useState(false);
-  const [passwordInput, setPasswordInput] = useState('');
+
+  const [password, setPassword] = useState<string>('');
+  const [errors, setErrors] = useState<string[]>([]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const pwd = e.target.value;
+    setPassword(pwd);
+
+    const result = PasswordSchema.safeParse({ password: pwd });
+    if (!result.success) {
+      setErrors(result.error.errors.map((error) => error.message));
+    } else {
+      setErrors([]);
+    }
+  };
 
   return (
     <form action={dispatch} className="space-y-3">
@@ -93,7 +109,7 @@ const RegisterForm = (props: Props) => {
               Password
             </label>
             <div className="relative">
-              {passwordInput.length > 0 &&
+              {password.length > 0 &&
                 (visiblePassword ? (
                   <EyeSlashIcon
                     className="absolute right-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 cursor-pointer"
@@ -119,17 +135,24 @@ const RegisterForm = (props: Props) => {
                 placeholder="Enter password"
                 required
                 minLength={6}
-                value={passwordInput}
-                onChange={(e) => setPasswordInput(e.target.value)}
+                value={password}
+                onChange={(e) => handleChange(e)}
               />
               <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
-            <div id="user-error" aria-live="polite" aria-atomic="true">
+            <PasswordStrengthMeter password={password} errors={errors} />
+            <div
+              className="my-4"
+              id="user-error"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {state.errors?.password &&
                 state.errors.password.map((error: string) => (
-                  <p className="mt-2 text-sm text-red-500" key={error}>
-                    {error}
-                  </p>
+                  <div className="my-2 flex gap-2" key={error}>
+                    <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+                    <p className="text-sm text-red-500">{error}</p>
+                  </div>
                 ))}
             </div>
           </div>
@@ -143,7 +166,7 @@ const RegisterForm = (props: Props) => {
           {state.message && (
             <>
               <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500 ">{state.message}</p>
+              <p className="text-sm text-red-500">{state.message}</p>
             </>
           )}
         </div>

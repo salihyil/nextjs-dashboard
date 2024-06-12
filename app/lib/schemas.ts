@@ -32,7 +32,7 @@ const UserSchema = z.object({
       message: 'Password must contain at least one uppercase letter.',
     })
     .regex(/[0-9]/, { message: 'Password must contain at least one number.' })
-    .regex(/[.@$!%*?&#]/, {
+    .regex(/[!@#$%^&*(),.?":{}|<>]/, {
       message: 'Password must contain at least one special character.',
     }),
 });
@@ -40,3 +40,4 @@ const UserSchema = z.object({
 export const CreateInvoice = FormSchema.omit({ id: true, date: true });
 export const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 export const InsertUser = UserSchema.omit({ id: true });
+export const PasswordSchema = UserSchema.omit({ id: true, name: true, email: true });
