@@ -5,11 +5,12 @@ import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import {
   AtSymbolIcon,
   ExclamationCircleIcon,
-  KeyIcon,
   EyeIcon,
   EyeSlashIcon,
+  KeyIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { authenticate, authenticateGoogle } from '../lib/actions';
@@ -17,6 +18,7 @@ import { Button } from './button';
 import Spinner from './spinner';
 
 export default function LoginForm() {
+  const router = useRouter();
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
   const [errorMessageGoogle, dispatchGoogle] = useFormState(
     authenticateGoogle,
@@ -31,7 +33,14 @@ export default function LoginForm() {
         <Button type="submit">Signin with Google</Button>
       </form>
       <form action={dispatch} className="space-y-3">
-        <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
+        <div className="relative flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
+          <XMarkIcon
+            className="absolute right-4 top-4 size-6 cursor-pointer"
+            onClick={() => {
+              router.back();
+            }}
+          />
+
           <h1 className={`${lusitana.className} mb-3 text-2xl`}>
             Please log in to continue.
           </h1>
@@ -97,12 +106,18 @@ export default function LoginForm() {
             </div>
           </div>
           <LoginButton />
-          <Link href="/register">
-            <Button className="mt-4 w-full bg-green-500 hover:bg-green-400">
-              Create new account
-              <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
-            </Button>
-          </Link>
+
+          <Button
+            type="button"
+            onClick={() => {
+              router.push('/sign-up');
+            }}
+            className="mt-4 w-full bg-green-500 hover:bg-green-400"
+          >
+            Create new account
+            <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+          </Button>
+
           <div
             className="flex h-8 items-end space-x-1"
             aria-live="polite"

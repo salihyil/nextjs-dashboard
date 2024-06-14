@@ -14,13 +14,16 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
+  auth,
   children,
 }: {
+  auth: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
+        {auth}
         {children}
         <Analytics />
       </body>

@@ -8,19 +8,22 @@ import {
   EyeIcon,
   EyeSlashIcon,
   KeyIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { useFormState, useFormStatus } from 'react-dom';
 
+import PasswordStrengthMeter from '@/app/ui/password-strength-meter';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { UserState, insertUsers } from '../lib/actions';
 import { PasswordSchema } from '../lib/schemas';
 import { Button } from './button';
-import PasswordStrengthMeter from '@/app/ui/password-strength-meter';
 import Spinner from './spinner';
 
 type Props = {};
 
-const RegisterForm = (props: Props) => {
+const SignUpForm = (props: Props) => {
+  const router = useRouter();
   const initialState: UserState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(insertUsers, initialState);
   const [visiblePassword, setVisiblePassword] = useState(false);
@@ -42,7 +45,13 @@ const RegisterForm = (props: Props) => {
 
   return (
     <form action={dispatch} className="space-y-3">
-      <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
+      <div className="relative flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
+        <XMarkIcon
+          className="absolute right-4 top-4 size-6 cursor-pointer"
+          onClick={() => {
+            router.back();
+          }}
+        />
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
           Please sign up to continue.
         </h1>
@@ -157,7 +166,7 @@ const RegisterForm = (props: Props) => {
             </div>
           </div>
         </div>
-        <RegisterButton />
+        <SignUpButton />
         <div
           className="mt-4 flex max-w-fit items-center justify-center space-x-2"
           aria-live="polite"
@@ -175,9 +184,9 @@ const RegisterForm = (props: Props) => {
   );
 };
 
-export default RegisterForm;
+export default SignUpForm;
 
-function RegisterButton() {
+function SignUpButton() {
   const { pending } = useFormStatus();
 
   return (
