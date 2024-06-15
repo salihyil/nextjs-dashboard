@@ -7,6 +7,11 @@ import Google from 'next-auth/providers/google';
 import { z } from 'zod';
 import { authConfig } from './auth.config';
 
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
 async function getUser(email: string): Promise<User | undefined> {
   try {
     const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
@@ -41,4 +46,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
     Google,
   ],
+  adapter: PrismaAdapter(prisma),
 });
