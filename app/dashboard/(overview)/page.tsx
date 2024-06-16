@@ -9,7 +9,8 @@ import {
 } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 
-import { capitalizeFirstLetter, currentUser } from '@/app/lib/utils';
+import { currentUser } from '@/app/lib/auth';
+import { capitalizeFirstLetter } from '@/app/lib/utils';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
