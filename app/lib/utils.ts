@@ -1,3 +1,4 @@
+import { auth } from '@/auth';
 import { Revenue } from './definitions';
 
 export const formatCurrency = (amount: number) => {
@@ -66,4 +67,14 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     '...',
     totalPages,
   ];
+};
+
+export function capitalizeFirstLetter(name: string): string {
+  if (!name) return '';
+  return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+}
+
+export const currentUser = async () => {
+  const session = await auth();
+  return session?.user
 };

@@ -9,6 +9,7 @@ import {
 } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 
+import { capitalizeFirstLetter, currentUser } from '@/app/lib/utils';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -16,10 +17,13 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
+  const user = await currentUser();
+  const username = capitalizeFirstLetter(user?.name || '');
+
   return (
     <main>
       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        Dashboard
+        Welcome {username}, Dashboard
       </h1>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <Suspense fallback={<CardsSkeleton />}>
