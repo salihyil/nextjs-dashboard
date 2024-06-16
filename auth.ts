@@ -46,5 +46,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
     Google,
   ],
-  adapter: PrismaAdapter(prisma),
+   
 });
