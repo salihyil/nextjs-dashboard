@@ -21,3 +21,13 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+@layer components {
+  .item {
+    @apply translate-y-5 transform opacity-0 transition-all duration-500 ease-out;
+  }
+
+  .item.fade-in {
+    @apply transform-none opacity-100;
+  }
+}

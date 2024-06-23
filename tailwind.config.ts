@@ -19,35 +19,40 @@ const config: Config = {
           600: '#2F6FEB',
         },
       },
-    },
-    keyframes: {
-      shimmer: {
-        '100%': {
-          transform: 'translateX(100%)',
+      keyframes: {
+        shimmer: {
+          '100%': {
+            transform: 'translateX(100%)',
+          },
+        },
+        slide: {
+          from: {
+            transform: 'translateX(70%)',
+            opacity: '0',
+          },
+          to: {
+            transform: 'translateX(0%)',
+            opacity: '1',
+          },
+        },
+        spin: {
+          '0%': {
+            transform: 'rotate(0deg)',
+          },
+          '100%': {
+            transform: 'rotate(360deg)',
+          },
+        },
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
-      slide: {
-        from: {
-          transform: 'translateX(70%)',
-          opacity: '0',
-        },
-        to: {
-          transform: 'translateX(0%)',
-          opacity: '1',
-        },
+      animation: {
+        slide: 'slide 750ms ease-in-out',
+        spin: 'spin 1s linear infinite',
+        fadeInUp: 'fadeInUp 0.6s ease-out',
       },
-      spin: {
-        '0%': {
-          transform: 'rotate(0deg)',
-        },
-        '100%': {
-          transform: 'rotate(360deg)',
-        },
-      },
-    },
-    animation: {
-      slide: 'slide 750ms ease-in-out',
-      spin: 'spin 1s linear infinite',
     },
   },
   plugins: [require('@tailwindcss/forms'), require('tailwindcss-animate')],

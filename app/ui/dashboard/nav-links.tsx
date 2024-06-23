@@ -2,9 +2,9 @@
 
 import {
   DocumentDuplicateIcon,
+  DocumentIcon,
   HomeIcon,
   UserGroupIcon,
-  DocumentIcon
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -20,7 +20,11 @@ const links = [
     icon: DocumentDuplicateIcon,
   },
   { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
-  { name: 'Whiteboard', href: '/dashboard/whiteboard', icon: DocumentIcon },
+  {
+    name: 'React Intersection Observer',
+    href: '/dashboard/react-intersection-observer',
+    icon: DocumentIcon,
+  },
 ];
 
 export default function NavLinks() {
