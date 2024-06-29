@@ -5,6 +5,7 @@ import {
   DocumentIcon,
   HomeIcon,
   UserGroupIcon,
+  Battery100Icon
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -19,11 +20,16 @@ const links = [
     href: '/dashboard/invoices',
     icon: DocumentDuplicateIcon,
   },
-  { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
+  { name: 'React Tour', href: '/dashboard/react-tour', icon: UserGroupIcon },
   {
     name: 'React Intersection Observer',
     href: '/dashboard/react-intersection-observer',
     icon: DocumentIcon,
+  },
+  {
+    name: 'Higher Order Component',
+    href: '/dashboard/higher-order-component',
+    icon: Battery100Icon,
   },
 ];
 
